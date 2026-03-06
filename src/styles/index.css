@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --edmark-dark-blue: #1a2d4a;
+    --edmark-red: #c41e3a;
+    --edmark-yellow: #f4c430;
+    --edmark-green: #2d8b57;
+    --edmark-light-blue: #5dade2;
+    --edmark-neutral-50: #f9fafb;
+    --edmark-neutral-100: #f3f4f6;
+    --edmark-neutral-200: #e5e7eb;
+    --edmark-neutral-700: #374151;
+    --edmark-neutral-900: #111827;
+  }
+  body {
+    @apply bg-edmark-neutral-50 text-edmark-dark-blue antialiased;
+  }
+}
