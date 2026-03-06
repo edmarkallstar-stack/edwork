@@ -1,26 +1,28 @@
 import { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 
 export function LoginPage() {
+  const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/'
+  const { signIn, signUp } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
     try {
-      await signIn(email, password)
-      navigate(from, { replace: true })
+      if (isSignUp) {
+        await signUp(email, password, displayName)
+      } else {
+        await signIn(email, password)
+      }
+      // Redirect is handled by route when auth state updates (user is set)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sign in failed')
+      setError(err instanceof Error ? err.message : (isSignUp ? 'Sign up failed' : 'Sign in failed'))
     } finally {
       setLoading(false)
     }
@@ -40,6 +42,23 @@ export function LoginPage() {
           {error && (
             <div className="p-3 rounded-md bg-edmark-red/10 text-edmark-red text-sm">
               {error}
+            </div>
+          )}
+          {isSignUp && (
+            <div>
+              <label htmlFor="displayName" className="block text-sm font-medium text-edmark-dark-blue mb-1">
+                Display name
+              </label>
+              <input
+                id="displayName"
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                required={isSignUp}
+                placeholder="Your name"
+                className="w-full px-3 py-2 border border-edmark-neutral-200 rounded-md focus:ring-2 focus:ring-edmark-light-blue focus:border-edmark-light-blue"
+                autoComplete="name"
+              />
             </div>
           )}
           <div>
@@ -66,17 +85,40 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              minLength={isSignUp ? 6 : undefined}
               className="w-full px-3 py-2 border border-edmark-neutral-200 rounded-md focus:ring-2 focus:ring-edmark-light-blue focus:border-edmark-light-blue"
-              autoComplete="current-password"
+              autoComplete={isSignUp ? 'new-password' : 'current-password'}
             />
+            {isSignUp && (
+              <p className="text-xs text-edmark-neutral-600 mt-1">At least 6 characters</p>
+            )}
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-edmark-red text-white font-medium rounded-md hover:bg-edmark-red/90 disabled:opacity-50"
+            className="w-full py-2 px-4 bg-edmark-dark-blue text-white font-medium rounded-md hover:bg-edmark-orange disabled:opacity-50 transition-colors"
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading
+              ? isSignUp
+                ? 'Creating account...'
+                : 'Signing in...'
+              : isSignUp
+                ? 'Sign up'
+                : 'Sign in'}
           </button>
+          <p className="text-center text-sm text-edmark-neutral-600">
+            {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+            <button
+              type="button"
+              onClick={() => {
+                setIsSignUp(!isSignUp)
+                setError('')
+              }}
+              className="text-edmark-light-blue font-medium hover:underline"
+            >
+              {isSignUp ? 'Sign in' : 'Sign up'}
+            </button>
+          </p>
         </form>
       </div>
     </div>

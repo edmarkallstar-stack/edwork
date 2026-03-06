@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { ProtectedRoute } from '@/routes'
 import { AppShell } from '@/components/AppShell'
@@ -24,6 +24,8 @@ import { MyPayslipsPage } from '@/features/payroll/MyPayslipsPage'
 import { PerformancePage } from '@/features/performance/PerformancePage'
 import { ContractsPage } from '@/features/contracts/ContractsPage'
 import { TrainingPage } from '@/features/training/TrainingPage'
+import { StaffTrainingListPage } from '@/features/training/StaffTrainingListPage'
+import { StaffCoursePage } from '@/features/training/StaffCoursePage'
 import { OffboardingPage } from '@/features/offboarding/OffboardingPage'
 import { AssetsPage } from '@/features/assets/AssetsPage'
 import { ReportsPage } from '@/features/reports/ReportsPage'
@@ -31,6 +33,11 @@ import { BulkImportExportPage } from '@/features/reports/BulkImportExportPage'
 
 function AppRoutes() {
   const { user, loading } = useAuth()
+  const location = useLocation()
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/'
+  // After login: use saved location, or send staff to /staff and others to /admin
+  const loginRedirectTo =
+    from !== '/' ? from : (user?.role === 'employee' ? '/staff' : '/admin')
 
   if (loading) {
     return (
@@ -42,7 +49,7 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
+      <Route path="/login" element={user ? <Navigate to={loginRedirectTo} replace /> : <LoginPage />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
       <Route
         path="/"
@@ -63,6 +70,8 @@ function AppRoutes() {
           <Route path="expenses" element={<MyExpensesPage />} />
           <Route path="requests" element={<MyRequestsPage />} />
           <Route path="payslips" element={<MyPayslipsPage />} />
+          <Route path="training" element={<StaffTrainingListPage />} />
+          <Route path="training/:courseId" element={<StaffCoursePage />} />
         </Route>
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

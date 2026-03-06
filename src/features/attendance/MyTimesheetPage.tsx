@@ -40,7 +40,7 @@ export function MyTimesheetPage() {
             type="button"
             onClick={() => checkInMutation.mutate()}
             disabled={checkInMutation.isPending}
-            className="px-4 py-2 bg-edmark-green text-white rounded-md hover:bg-edmark-green/90 disabled:opacity-50"
+            className="px-4 py-2 bg-edmark-dark-blue text-white rounded-md hover:bg-edmark-orange disabled:opacity-50 transition-colors"
           >
             Check in
           </button>
@@ -52,7 +52,7 @@ export function MyTimesheetPage() {
                 type="button"
                 onClick={() => checkOutMutation.mutate(today.id)}
                 disabled={checkOutMutation.isPending}
-                className="px-4 py-2 bg-edmark-red text-white rounded-md hover:bg-edmark-red/90 disabled:opacity-50"
+                className="px-4 py-2 bg-edmark-dark-blue text-white rounded-md hover:bg-edmark-orange disabled:opacity-50 transition-colors"
               >
                 Check out
               </button>

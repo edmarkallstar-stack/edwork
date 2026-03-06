@@ -16,7 +16,7 @@ export function JobPostingsPage() {
         <h2 className="text-xl font-semibold text-edmark-dark-blue">Job postings</h2>
         <Link
           to="/admin/recruitment/jobs/new"
-          className="px-4 py-2 bg-edmark-red text-white text-sm font-medium rounded-md hover:bg-edmark-red/90"
+          className="px-4 py-2 bg-edmark-dark-blue text-white text-sm font-medium rounded-md hover:bg-edmark-orange transition-colors"
         >
           New job
         </Link>

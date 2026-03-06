@@ -6,12 +6,61 @@ service cloud.firestore {
       allow read, write: if request.auth != null;
     }
     match /countries/{docId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read, write: if request.auth != null;
     }
     match /branches/{docId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read, write: if request.auth != null;
+    }
+    match /departments/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /timesheets/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /leaveTypes/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /leaveBalances/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /leaveRequests/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /otRequests/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /expenseClaims/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /benefits/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /employeeBenefits/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /payslips/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /payrollRuns/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /publicHolidays/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /jobPostings/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /applications/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /onboardingTemplates/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /courses/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /courseCompletions/{docId} {
+      allow read, write: if request.auth != null;
     }
   }
 }

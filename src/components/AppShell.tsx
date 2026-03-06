@@ -21,18 +21,18 @@ export function AppShell() {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 fixed md:static inset-y-0 left-0 z-40 w-64 bg-edmark-dark-blue text-white flex flex-col transition-transform duration-200 ease-out`}
       >
-        <div className="p-4 border-b border-white/10 flex items-center justify-between">
-          <span className="font-display font-bold text-lg">EDWORK</span>
+        <div className="p-4 border-b border-white/10 flex items-center justify-between bg-edmark-dark-blue">
+          <span className="font-display font-bold text-lg text-white">EDWORK</span>
           <button
             type="button"
-            className="md:hidden p-2 rounded hover:bg-white/10"
+            className="md:hidden p-2 rounded hover:bg-white/10 text-white"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close menu"
           >
             ✕
           </button>
         </div>
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto bg-edmark-dark-blue text-white">
           <NavLink
             to="/staff"
             end
@@ -105,6 +105,15 @@ export function AppShell() {
             onClick={() => setSidebarOpen(false)}
           >
             My payslips
+          </NavLink>
+          <NavLink
+            to="/staff/training"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-sm ${isActive ? 'bg-edmark-light-blue/20 text-edmark-light-blue' : 'hover:bg-white/10'}`
+            }
+            onClick={() => setSidebarOpen(false)}
+          >
+            Training
           </NavLink>
           {isAdmin && (
                 <>
@@ -247,15 +256,15 @@ export function AppShell() {
                 </>
               )}
         </nav>
-        <div className="p-3 border-t border-white/10">
-          <div className="text-xs text-white/70 truncate px-2" title={user?.email}>
+        <div className="p-3 border-t border-white/10 bg-edmark-dark-blue">
+          <div className="text-xs text-white/90 truncate px-2" title={user?.email}>
             {user?.displayName || user?.email}
           </div>
-          <div className="text-xs text-white/50 truncate px-2">{user?.role}</div>
+          <div className="text-xs text-white/70 truncate px-2">{user?.role}</div>
           <button
             type="button"
             onClick={handleSignOut}
-            className="mt-2 w-full text-left px-3 py-2 rounded-md text-sm hover:bg-edmark-red/20 text-edmark-red"
+            className="mt-2 w-full text-left px-3 py-2 rounded-md text-sm bg-white/10 text-white hover:bg-edmark-orange transition-colors"
           >
             Sign out
           </button>
@@ -263,16 +272,16 @@ export function AppShell() {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 bg-white border-b border-edmark-neutral-200 px-4 py-3 flex items-center gap-3">
+        <header className="sticky top-0 z-30 bg-edmark-dark-blue border-b border-white/10 px-4 py-3 flex items-center gap-3">
           <button
             type="button"
-            className="md:hidden p-2 rounded-md hover:bg-edmark-neutral-100 text-edmark-dark-blue"
+            className="md:hidden p-2 rounded-md hover:bg-white/10 text-white"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open menu"
           >
             ☰
           </button>
-          <h1 className="text-edmark-dark-blue font-semibold truncate">EDWORK</h1>
+          <h1 className="text-white font-semibold truncate">EDWORK</h1>
         </header>
         <main className="flex-1 p-4 md:p-6 overflow-auto">
           <Outlet />

@@ -109,7 +109,7 @@ export function LeaveRequestPage() {
           <button
             type="submit"
             disabled={createMutation.isPending}
-            className="px-4 py-2 bg-edmark-red text-white rounded-md hover:bg-edmark-red/90 disabled:opacity-50"
+            className="px-4 py-2 bg-edmark-dark-blue text-white rounded-md hover:bg-edmark-orange disabled:opacity-50 transition-colors"
           >
             Submit request
           </button>
